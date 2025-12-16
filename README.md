@@ -1,8 +1,4 @@
 # Sudoku Generator Project
-
-**Author:** Your Name
-**Date:** December 16, 2025
-
 ## Project Overview
 
 This project implements a Sudoku generator in C that can generate Sudoku grids of any dimension `n`. The algorithm uses permutations, Latin squares, and factorial-based calculations to produce all valid arrangements of numbers in the grid while maintaining Sudoku constraints.
