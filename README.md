@@ -1,8 +1,4 @@
 # Latin Square Generator Project
-
-**Author:** Your Name
-**Date:** December 16, 2025
-
 ## Project Overview
 
 This project implements a Latin square generator in C. A Latin square is an `n × n` grid filled with `n` different symbols (numbers in this case), each occurring exactly once in each row and column. The generator uses permutations and factorial-based logic to produce all possible Latin squares for a given dimension `n`.
