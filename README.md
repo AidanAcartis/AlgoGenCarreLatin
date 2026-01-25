@@ -1,100 +1,208 @@
-# Latin Square Generation in C
+# Latin Square Generator and Permutation Explorer (C)
 
-## Overview
+This project generates **Latin squares** from permutations of an initial row, and explores all possible permutations using optimized loops.
 
-This project implements an **algorithmic and combinatorial exploration of Latin squares of arbitrary order n**, written in **procedural C**.
+The program is written in **C**, and is split into several modules:
 
-The work focuses on:
-
-* permutation generation
-* construction of Latin squares
-* enumeration of equivalent Latin squares via row permutations
-
-The implementation reflects an **early-stage, non–object-oriented approach**, intentionally preserved to showcase the original reasoning and algorithmic structure.
+- `main.c`
+- `boucles.c`
+- `permutation.c`
+- `utils.c`
+- header files: `permutation.h`, `boucles.h`, `utils.h`
 
 ---
 
-## Mathematical Background
+## 📌 Project Objective
 
-A **Latin square of order n** is an n×n grid filled with symbols {1, …, n} such that:
-
-* each symbol appears **exactly once in every row**
-* each symbol appears **exactly once in every column**
-
-This project uses the classical cyclic construction:
-
-> ( L(i, j) = t[(i + j) \bmod n] )
-
-where `t` is a permutation of {1, …, n}.
-
-By varying the permutation `t` and applying row permutations, the program generates multiple Latin squares of the same order.
+- Generate a **Latin square** of order `n` from an initial permutation.
+- Iterate through all possible permutations of the first row.
+- For each permutation, build the corresponding Latin square.
+- Display the number of generated permutations.
 
 ---
 
-## What the Program Does
+## 🧠 Mathematical Concepts
 
-For a given input dimension `n`, the program:
+### 1. **Factorial (n!)**
 
-1. Generates all permutations of the set {1, …, n}
-2. Builds a base Latin square from each permutation
-3. Produces additional Latin squares by permuting rows
-4. Prints the resulting Latin squares to standard output
+The number of permutations of a set with `n` elements is:
 
-All operations are **valid for any n ≥ 1**, within the limits imposed by fixed array sizes.
+\[
+n! = n \times (n-1) \times (n-2) \times \dots \times 2 \times 1
+\]
 
----
+The function `Factoriel(n)` computes this value:
 
-## Key Characteristics
-
-* Language: **C (procedural)**
-* No external libraries
-* Manual permutation logic (factorial-based enumeration)
-* Emphasis on algorithmic transparency rather than optimization
-* Fixed-size internal matrices (maximum size 10×10)
-
----
-
-## Design Notes
-
-* The code intentionally avoids object-oriented abstractions
-* The permutation logic (`Tour`, `Permut`, factorial decomposition) is implemented manually
-* The focus is on **combinatorial structure**, not performance or memory safety
-
-This makes the project suitable for:
-
-* studying Latin squares
-* understanding permutation-based generation
-* educational exploration of combinatorics in C
+```c
+int Factoriel(int a)
+{
+    int F = 1;
+    for(int i = 2; i <= a; i++)
+        F *= i;
+    return F;
+}
+````
 
 ---
 
-## Limitations
+### 2. **Half Factorial (n!/2)**
 
-* Maximum supported order is limited by static array sizes (10×10)
-* No filtering of isomorphic Latin squares
-* No additional constraints beyond the Latin square definition
+To optimize the search and reduce the number of iterations, the program uses:
 
----
+[
+\frac{n!}{2}
+]
 
-## Motivation
+The function `FactorielSur2(n)` computes `n!/2`:
 
-This project was created as a **mathematical and algorithmic experiment**, prior to learning object-oriented programming. It represents an early attempt to bridge combinatorics and algorithm design using low-level constructs.
+```c
+int FactorielSur2(int a)
+{
+    if (a <= 1) return 1;
 
-The code is kept close to its original form to preserve this exploratory intent.
+    int F = 1;
+    for(int i = 2; i <= a; i++)
+        F *= i;
 
----
-
-## Compilation and Execution
-
-```bash
-gcc carre.c -o carre
-./carre
+    return F / 2;
+}
 ```
 
-You will be prompted to enter the desired dimension `n`.
+---
+
+### 3. **Latin Square**
+
+A **Latin square** of order `n` is an `n × n` matrix such that:
+
+* Each row contains numbers from `1` to `n` without repetition.
+* Each column contains numbers from `1` to `n` without repetition.
+
+In this project, the Latin square is built from a base row `t`:
+
+[
+\text{Square}[i][j] = t[(i + j) \bmod n]
+]
+
+This creates a **cyclic Latin square**, which is one of the standard constructions.
 
 ---
 
-## License
+### 4. **Permutations by Circular Shifts**
 
-This project is shared for educational and exploratory purposes.
+The permutation function `FonctionPermut()` performs a **circular shift** of the array `t`.
+
+Given a row:
+
+```
+t = [1, 2, 3, 4]
+```
+
+With `tour = 1`, `permut = 4`:
+
+```
+T = [4, 1, 2, 3]
+```
+
+The function ensures the permutation respects bounds and stays within the array.
+
+---
+
+## 📁 File Structure
+
+### `main.c`
+
+* Reads the dimension `n`
+* Creates and initializes the base row `t`
+* Creates the `Tour` and `Permut` arrays
+* Prints the expected number of permutations (`n!`)
+* Calls `BouclePermut()`
+
+### `boucles.c`
+
+Contains:
+
+* `BouclePermut()`
+
+  * Iterates through permutations of the first row
+  * Builds Latin squares
+  * Calls `BouclePermutCarre()`
+
+* `BouclePermutCarre()`
+
+  * Iterates through permutations of the Latin square itself
+
+* `Echange()`
+
+  * Copies one matrix into another
+
+### `permutation.c`
+
+Contains:
+
+* `FonctionPermut()`
+
+  * Applies a circular permutation on the row
+* `DefinirTableaut()`
+
+  * Defines the initial base row `[1..n]`
+
+### `utils.c`
+
+Contains:
+
+* Display functions (`afficheTableau`, `afficheTableauPermutee`)
+* `Factoriel()` and `FactorielSur2()`
+
+---
+
+## 🧪 Example Execution
+
+Example input:
+
+```
+Enter the dimension: 3
+```
+
+Expected output:
+
+```
+1   2   3
+We should obtain 6 permutations
+...
+```
+
+---
+
+## ⚙️ Compilation
+
+```bash
+gcc main.c boucles.c permutation.c utils.c -o main
+```
+
+Run:
+
+```bash
+./main
+```
+
+---
+
+## 🔍 Notes
+
+* The program uses `FactorielSur2()` for optimization and to avoid exploring symmetric permutations.
+* It generates cyclic Latin squares and then permutes rows/columns using the permutation logic.
+
+---
+
+## 🚀 Possible Improvements
+
+* Handle edge cases (`n = 1`, `n = 2`) more gracefully.
+* Avoid duplicates by detecting isomorphic Latin squares.
+* Improve performance for larger `n` using better permutation algorithms.
+
+---
+
+## 📝 Author
+
+A C project for generating Latin squares and exploring permutations.
+
