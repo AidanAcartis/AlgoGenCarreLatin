@@ -2,69 +2,117 @@
 #include <stdlib.h>
 #include "permutation.h"
 
-Permutation* Permutation_create(int taille) {
-    Permutation *p = malloc(sizeof(Permutation));
-    p->taille = taille;
-    p->base = malloc(taille * sizeof(int));
-    p->permute = malloc(taille * sizeof(int));
-    return p;
+void FonctionPermut(int dimension,int tour,int permut, int T[],int t[])
+{
+	int i,n,p;
+	int Compt = 0;
+	i = n = dimension - 1;
+      //printf("\n\nPERMUTATION:\n");
+
+     if(tour > permut)
+	 {
+	 	printf("\n tour est strictement superieur a permut\n");
+	 	printf("\n permut = %d", permut);
+	 	printf("\ndimension = %d", dimension);
+	 	printf("\nTour = %d", tour);
+	 	exit(0);
+	 }
+	 else if(tour > dimension)
+	 {
+	 	printf("\n tour est strictement sup�rieur a dimension\n");
+	 	printf("\n permut = %d", permut);
+	 	printf("\ndimension = %d", dimension);
+	 	printf("\nTour = %d", tour);
+	 	exit(0);
+	 }
+	 else if(permut > dimension)
+	 {
+	 	printf("\npermut > dimension");
+	 	printf("\n permut = %d", permut);
+	 	printf("\ndimension = %d", dimension);
+	 	printf("\nTour = %d", tour);
+	 	exit(0);
+	 }
+	 else
+	 {
+	 	//printf("\npermut <= dimension");
+	 	//printf("\n permut = %d", permut);
+	 	//printf("\nTour = %d", tour);
+	 	//printf("\ndimension = %d", dimension);
+    do
+	{
+		//printf("\ni = %d",i);
+		p = i + tour;
+		                    if(p<dimension)
+							 {
+							 	T[i] = t[(i + tour)];
+							 	//printf("\nT[%d] = t[%d] = %d",i,(i + tour),T[i]);
+							 }
+		                    else if(p>= dimension)
+			                 {
+							   T[i] = t[((i+tour)- permut)];
+							 //printf("\n ((%d+%d) moins %d)= %d\n", i,tour,permut,((i+tour)- permut));
+							 //printf("\nT[%d] = t[%d] = %d",i,((i + tour)- permut),T[i]);
+		                     }
+							 else if(p==0)
+		                     {
+			                   T[i]=t[permut];
+			                   //printf("\nT[%d] = t[%d] = %d",i,permut,T[i]);
+		                     }
+		i--;
+		Compt++;
+	}while(Compt != permut);
+	 printf("\n");
+
+
+	 if(i<0)
+	 {
+	 	printf("\t");
+	 	//printf("i = %d\n", i);
+		//printf("Compt = %d", Compt);
+	 	//printf("\n\nTableau permutee:\n");
+        //for(j = 0; j<dimension ; j++)
+	    //{
+		//printf("T[%d] = %d\n",j,T[j]);
+	    //}
+	 }
+	 else if(i>=0)
+	 {
+	 	  //printf("i = %d\n", i);
+		  //printf("Compt = %d", Compt);
+	     do
+	     {
+		    T[i] = t[i];
+		    //printf("\nT[%d] = %d",i,T[i]);
+		    i--;
+		    Compt++;
+		 }while(Compt != dimension);
+
+	        //printf("\n\nTableau permutee:\n");
+            //for(j = 0; j<dimension ; j++)
+	        //{
+		      // printf("T[%d] = %d\n",j,T[j]);
+	        //}
+	}
+	else
+	{
+		printf("\nc'est un tout autre probleme\n");
+		printf("i = %d\n", i);
+		printf("Compt = %d", Compt);
+
+		exit(0);
+	}
+	}
+
 }
 
-void Permutation_destroy(Permutation *p) {
-    free(p->base);
-    free(p->permute);
-    free(p);
-}
-
-void Permutation_init(Permutation *p) {
-    for(int i=0; i<p->taille; i++) {
-        p->base[i] = ((i + p->taille) % p->taille) + 1;
-    }
-}
-
-void Permutation_rotate(Permutation *p, int tour, int permut) {
-    int i = p->taille - 1;
-    int compt = 0;
-
-    if(tour > permut || tour > p->taille || permut > p->taille) {
-        printf("Erreur: paramètres invalides\n");
-        return;
-    }
-
-    do {
-        int s = i + tour;
-        if(s < p->taille) {
-            p->permute[i] = p->base[s];
-        } else {
-            p->permute[i] = p->base[s - permut];
-        }
-        i--;
-        compt++;
-    } while(compt != permut);
-
-    while(i >= 0) {
-        p->permute[i] = p->base[i];
-        i--;
-        compt++;
-    }
-}
-
-void Permutation_print(Permutation *p) {
-    for(int i=0; i<p->taille; i++) {
-        printf("%d ", p->permute[i]);
-    }
-    printf("\n");
-}
-
-int factoriel(int a) {
-    int F = 1;
-    while(a > 1) {
-        F *= a;
-        a--;
-    }
-    return F;
-}
-
-int factoriel_sur2(int a) {
-    return factoriel(a) / 2;
+void DefinirTableaut(int t[],int TailleTableau)
+{
+	int d;
+	int i = 0;
+	d = TailleTableau;
+	for(i=0;i<d;i++)
+	{
+		t[i] = ((i+d)%d)+1;
+	}
 }
