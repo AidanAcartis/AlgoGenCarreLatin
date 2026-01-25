@@ -187,21 +187,6 @@ Run:
 
 ---
 
-## 🔍 Notes
-
-* The program uses `FactorielSur2()` for optimization and to avoid exploring symmetric permutations.
-* It generates cyclic Latin squares and then permutes rows/columns using the permutation logic.
-
----
-
-## 🚀 Possible Improvements
-
-* Handle edge cases (`n = 1`, `n = 2`) more gracefully.
-* Avoid duplicates by detecting isomorphic Latin squares.
-* Improve performance for larger `n` using better permutation algorithms.
-
----
-
 ## 📝 Author
 
 A C project for generating Latin squares and exploring permutations.
