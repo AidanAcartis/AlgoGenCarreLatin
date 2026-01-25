@@ -1,58 +1,100 @@
-# Latin Square Generator Project
-## Project Overview
+# Latin Square Generation in C
 
-This project implements a Latin square generator in C. A Latin square is an `n × n` grid filled with `n` different symbols (numbers in this case), each occurring exactly once in each row and column. The generator uses permutations and factorial-based logic to produce all possible Latin squares for a given dimension `n`.
+## Overview
 
-## Features
+This project implements an **algorithmic and combinatorial exploration of Latin squares of arbitrary order n**, written in **procedural C**.
 
-* Generates Latin squares of any dimension `n`.
-* Uses permutation logic to systematically explore all row arrangements.
-* Builds full Latin squares from row permutations while respecting constraints.
-* Includes printing of intermediate permutations for verification.
+The work focuses on:
 
-## How It Works
+* permutation generation
+* construction of Latin squares
+* enumeration of equivalent Latin squares via row permutations
 
-1. **Initialization**: Numbers from 1 to `n` are stored in an initial array.
-2. **Permutation Function (`FonctionPermut`)**: Generates permuted sequences for rows.
-3. **Row Looping (`BouclePermut`)**: Iterates through permutations to create all possible first rows.
-4. **Latin Square Construction (`BouclePermutCarre`)**: Combines row permutations to construct complete Latin squares.
-5. **Matrix Copy (`Echange`)**: Copies intermediate matrices for further permutations without losing previous states.
-6. **Factorial Functions (`Factoriel` and `FactorielSur2`)**: Used for counting permutations and controlling loops.
+The implementation reflects an **early-stage, non–object-oriented approach**, intentionally preserved to showcase the original reasoning and algorithmic structure.
 
-## Usage
+---
 
-1. Compile the program:
+## Mathematical Background
+
+A **Latin square of order n** is an n×n grid filled with symbols {1, …, n} such that:
+
+* each symbol appears **exactly once in every row**
+* each symbol appears **exactly once in every column**
+
+This project uses the classical cyclic construction:
+
+> ( L(i, j) = t[(i + j) \bmod n] )
+
+where `t` is a permutation of {1, …, n}.
+
+By varying the permutation `t` and applying row permutations, the program generates multiple Latin squares of the same order.
+
+---
+
+## What the Program Does
+
+For a given input dimension `n`, the program:
+
+1. Generates all permutations of the set {1, …, n}
+2. Builds a base Latin square from each permutation
+3. Produces additional Latin squares by permuting rows
+4. Prints the resulting Latin squares to standard output
+
+All operations are **valid for any n ≥ 1**, within the limits imposed by fixed array sizes.
+
+---
+
+## Key Characteristics
+
+* Language: **C (procedural)**
+* No external libraries
+* Manual permutation logic (factorial-based enumeration)
+* Emphasis on algorithmic transparency rather than optimization
+* Fixed-size internal matrices (maximum size 10×10)
+
+---
+
+## Design Notes
+
+* The code intentionally avoids object-oriented abstractions
+* The permutation logic (`Tour`, `Permut`, factorial decomposition) is implemented manually
+* The focus is on **combinatorial structure**, not performance or memory safety
+
+This makes the project suitable for:
+
+* studying Latin squares
+* understanding permutation-based generation
+* educational exploration of combinatorics in C
+
+---
+
+## Limitations
+
+* Maximum supported order is limited by static array sizes (10×10)
+* No filtering of isomorphic Latin squares
+* No additional constraints beyond the Latin square definition
+
+---
+
+## Motivation
+
+This project was created as a **mathematical and algorithmic experiment**, prior to learning object-oriented programming. It represents an early attempt to bridge combinatorics and algorithm design using low-level constructs.
+
+The code is kept close to its original form to preserve this exploratory intent.
+
+---
+
+## Compilation and Execution
 
 ```bash
-gcc latin_square_generator.c -o latin_square_generator
+gcc carre.c -o carre
+./carre
 ```
 
-2. Run the executable and enter the desired dimension:
+You will be prompted to enter the desired dimension `n`.
 
-```bash
-./latin_square_generator
-Enter dimension: 4
-```
+---
 
-3. The program prints all generated permutations and the corresponding Latin squares.
+## License
 
-## Key Functions
-
-* `FonctionPermut()`: Generates permutations of a row.
-* `BouclePermut()`: Loops through row permutations.
-* `BouclePermutCarre()`: Constructs complete Latin squares from row permutations.
-* `Echange()`: Maintains copies of matrices during permutation generation.
-* `Factoriel()` / `FactorielSur2()`: Factorial calculations for loop management.
-
-## Applications
-
-* Educational tool to explore combinatorics and matrix arrangements.
-* Foundation for advanced puzzle generation and Latin square-based algorithms.
-* Useful in design of experiments and error-correcting codes.
-  
-## Conclusion
-
-This project demonstrates algorithmic techniques for generating Latin squares using permutations and factorial logic. It highlights systematic combinatorial generation and matrix manipulation in C.
-
-
-Veux‑tu que je fasse ça ?
+This project is shared for educational and exploratory purposes.
