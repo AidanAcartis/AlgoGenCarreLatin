@@ -12,7 +12,7 @@ The program is written in **C**, and is split into several modules:
 
 ---
 
-## 📌 Project Objective
+##  Project Objective
 
 - Generate a **Latin square** of order `n` from an initial permutation.
 - Iterate through all possible permutations of the first row.
@@ -21,7 +21,7 @@ The program is written in **C**, and is split into several modules:
 
 ---
 
-## 🧠 Mathematical Concepts
+##  Mathematical Concepts
 
 ### 1. **Factorial (n!)**
 
@@ -107,7 +107,7 @@ The function ensures the permutation respects bounds and stays within the array.
 
 ---
 
-## 📁 File Structure
+##  File Structure
 
 ### `main.c`
 
@@ -155,7 +155,7 @@ Contains:
 
 ---
 
-## 🧪 Example Execution
+## Example Execution
 
 Example input:
 
@@ -173,7 +173,7 @@ We should obtain 6 permutations
 
 ---
 
-## ⚙️ Compilation
+## Compilation
 
 ```bash
 gcc main.c boucles.c permutation.c utils.c -o main
@@ -187,7 +187,7 @@ Run:
 
 ---
 
-## 📝 Author
+## Author
 
 A C project for generating Latin squares and exploring permutations.
 
